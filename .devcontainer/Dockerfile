@@ -11,13 +11,17 @@ RUN apt-get update && \
 ARG USERNAME=devops
 ARG USER_UID=1000
 ARG USER_GID=$USER_UID
+ARG DOTFILEURL=https://github.com/bashgame/cuddly-journey/blob/main/dotfiles/dotfiles.tar.gz
 
 # Create the user with passwordless sudo privileges
 RUN groupadd --gid $USER_GID $USERNAME \
     && useradd --uid $USER_UID --gid $USER_GID -m $USERNAME -s /bin/bash \
     && usermod -aG sudo $USERNAME \
     && echo $USERNAME ALL=\(root\) NOPASSWD:ALL > /etc/sudoers.d/$USERNAME \
-    && chmod 0440 /etc/sudoers.d/$USERNAME
+    && chmod 0440 /etc/sudoers.d/$USERNAME \
+    && curl -SL $DOTFILEURL \
+    | tar --owner=$USER_UID --group=$USER_GID -xzC /home/$USERNAME
+
 
 # Set up the Python development environment
 WORKDIR /app
