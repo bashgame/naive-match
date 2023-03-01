@@ -3,7 +3,7 @@ FROM python:3.9-slim
 
 # Add any tools that are needed beyond Python 3.9
 RUN apt-get update && \
-    apt-get install -y sudo vim git zip tree curl wget jq && \
+    apt-get install -y sudo vim git zip tree curl wget jq tar && \
     apt-get autoremove -y && \
     apt-get clean -y
 
@@ -11,17 +11,16 @@ RUN apt-get update && \
 ARG USERNAME=devops
 ARG USER_UID=1000
 ARG USER_GID=$USER_UID
-ARG DOTFILEURL=https://github.com/bashgame/cuddly-journey/blob/main/dotfiles/dotfiles.tar.gz
+ARG DOTFILEURL="https://github.com/bashgame/cuddly-journey/raw/main/dotfiles/dotfiles.tar.gz"
 
 # Create the user with passwordless sudo privileges
 RUN groupadd --gid $USER_GID $USERNAME \
     && useradd --uid $USER_UID --gid $USER_GID -m $USERNAME -s /bin/bash \
     && usermod -aG sudo $USERNAME \
     && echo $USERNAME ALL=\(root\) NOPASSWD:ALL > /etc/sudoers.d/$USERNAME \
-    && chmod 0440 /etc/sudoers.d/$USERNAME \
-    && curl -SL $DOTFILEURL \
-    | tar --owner=$USER_UID --group=$USER_GID -xzC /home/$USERNAME
-
+    && chmod 0440 /etc/sudoers.d/$USERNAME
+WORKDIR /home/$USERNAME
+RUN curl -LS $DOTFILEURL | tar -xz --owner=$USER_UID --group=$USER_GID
 
 # Set up the Python development environment
 WORKDIR /app
