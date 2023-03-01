@@ -154,3 +154,11 @@ def reads_from_fastq(filename):
 
 def phred33toQ(phred):
     return ord(phred) - 33
+
+
+def meanQualByPosition(quals):
+    values = [0] * len(quals[0])
+    for qual in quals:
+        for idx in range(len(qual)):
+            values[idx] += float(phred33toQ(qual[idx])) / float(len(quals))
+    return values

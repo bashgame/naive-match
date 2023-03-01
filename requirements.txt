@@ -1,4 +1,5 @@
 # Dependencies for this project
+matplotlib
 
 # testing/linting dependencies
 nose
