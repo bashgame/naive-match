@@ -38,3 +38,35 @@ def naive(pattern, sequence):
         if matched:
             matches.append(sidx)
     return matches
+
+
+def rc_naive(pattern, sequence):
+    """ This function performs a naive exact match alignment of pattern and the reverse
+        complement of pattern onto sequence
+
+    Args:
+        pattern (str): A pattern to attempt to align to sequence
+        sequence (str): The sequence to attempt alignment to.
+
+    Returns:
+        list [ ints ]: The list of indices where pattern can be exactly aligned to sequence
+    """
+    matches = []
+    pattern_rc = rev_comp(pattern)
+    for sidx in range(len(sequence) - len(pattern) + 1):
+        matched = True
+        for pidx in range(len(pattern)):
+            if sequence[sidx + pidx] != pattern[pidx]:
+                matched = False
+                break
+        if matched:
+            matches.append(sidx)
+    for sidx in range(len(sequence) - len(pattern_rc) + 1):
+        matched = True
+        for pidx in range(len(pattern_rc)):
+            if sequence[sidx + pidx] != pattern_rc[pidx]:
+                matched = False
+                break
+        if matched and sidx not in matches:
+            matches.append(sidx)
+    return matches

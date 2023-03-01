@@ -58,3 +58,25 @@ class TestTemplate(TestCase):
         expected = []
         result = utils.naive(bad_seq, test_seq)
         self.assertEqual(expected, result)
+
+    def test_rc_naive(self):
+        """ It should return matches for the pattern and its reverse complement """
+        test_seq = makeSeq(100)
+        test_pat = 'GTA'
+        test_rc = utils.rev_comp(test_pat)
+        expected = utils.naive(test_pat, test_seq)
+        expected += utils.naive(test_rc, test_seq)
+        expected = sorted(expected)
+        result = sorted(utils.rc_naive(test_pat, test_seq))
+        self.assertEqual(expected, result)
+
+    def test_rc_naive_own_rc(self):
+        """ It should return an index only once """
+        test_seq = makeSeq(1000) + 'AGCT'                   # Ensure at least 1 match
+        test_pat = 'AGCT'
+        test_rc = utils.rev_comp(test_pat)
+        expected = utils.naive(test_pat, test_seq)
+        expected += utils.naive(test_rc, test_seq)          # This will double up the matches
+        expected = sorted(expected)
+        result = sorted(utils.rc_naive(test_pat, test_seq))
+        self.assertNotEqual(expected, result)
