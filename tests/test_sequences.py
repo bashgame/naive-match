@@ -106,3 +106,16 @@ class TestSequences(TestCase):
         result3 = utils.naive_2mm(test_pat3, test_seq)
         self.assertTrue(expected in result2)
         self.assertTrue(expected not in result3)
+
+    def test_get_reads_from_fastq(self):
+        """ It should return a dictionary of reads """
+        filename = 'ERR037900_1.first1000.fastq'
+        reads, quals = utils.reads_from_fastq(filename)
+        self.assertTrue(len(reads) > 0 and len(quals) > 0)
+
+    def test_file_not_found(self):
+        """ It should return an error message """
+        filename = 'dingo_baby'
+        errorMessage = 'Error, file not found'
+        seq = utils.reads_from_fastq(filename)
+        self.assertEqual(seq, errorMessage)
