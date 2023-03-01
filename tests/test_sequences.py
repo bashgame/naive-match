@@ -113,7 +113,7 @@ class TestSequences(TestCase):
         reads, quals = utils.reads_from_fastq(filename)
         self.assertTrue(len(reads) > 0 and len(quals) > 0)
 
-    def test_file_not_found(self):
+    def test_qfile_not_found(self):
         """ It should return an error message """
         filename = 'dingo_baby'
         errorMessage = 'Error, file not found'
@@ -126,3 +126,9 @@ class TestSequences(TestCase):
         expected = 2
         result = utils.phred33toQ(test_char)
         self.assertEqual(expected, result)
+
+    def test_mean_quality_by_position(self):
+        test_read = ['#'] * 100
+        expected = 2.0
+        result = utils.meanQualByPosition(test_read)
+        self.assertAlmostEqual(expected, result[0])
