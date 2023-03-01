@@ -1,5 +1,5 @@
 """
-Template Test Cases, please update
+Sequence Test Cases
 """
 import random
 from unittest import TestCase
@@ -13,7 +13,7 @@ def makeSeq(length):
         seq += random.choice('ACGT')
     return seq
 
-class TestTemplate(TestCase):
+class TestSequences(TestCase):
     """ Test Template, please update """
 
     @classmethod
@@ -80,3 +80,18 @@ class TestTemplate(TestCase):
         expected = sorted(expected)
         result = sorted(utils.rc_naive(test_pat, test_seq))
         self.assertNotEqual(expected, result)
+
+    def test_get_seq_from_fasta(self):
+        """ It should return a sequence """
+        filename = 'lambda_virus.fa'
+        seq = utils.seq_from_fasta(filename)
+        self.assertTrue(len(seq) > 0)
+        self.assertFalse(seq.startswith('>'))
+
+    def test_file_not_found(self):
+        """ It should return an error message """
+        filename = 'dingo_baby'
+        errorMessage = 'Error, file not found'
+        seq = utils.seq_from_fasta(filename)
+        self.assertEqual(seq, errorMessage)
+
