@@ -70,3 +70,27 @@ def rc_naive(pattern, sequence):
         if matched and sidx not in matches:
             matches.append(sidx)
     return matches
+
+
+def seq_from_fasta(filename):
+    """ Strips the initial line from a fasta file containing a single sequence
+        for a single organism. Reads the remaining lines and concatenates them
+        onto an str.
+
+    Args:
+        filename (str): The name of the file to read from in fasta format
+
+    Returns:
+        str: The genome sequence contained in the file
+    """
+    sequence = ''
+    try:
+        file = open(filename)
+    except FileNotFoundError:
+        print(f"{filename} not found!")
+        return "Error, file not found"
+    for line in file:
+        line = line.rstrip()
+        if not line.startswith('>'):
+            sequence += line
+    return sequence
