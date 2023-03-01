@@ -1,6 +1,4 @@
-[![CI](https://github.com/bashgame/naive-match/actions/workflows/ci.yml/badge.svg)](https://github.com/bashgame/naive-match/actions/workflows/ci.yml)
-
-# Naive Match
+# Naive Match   [![CI](https://github.com/bashgame/naive-match/actions/workflows/ci.yml/badge.svg)](https://github.com/bashgame/naive-match/actions/workflows/ci.yml)
 Implementation of naive exact matching for nucleotide sequences
 
 ## Testing framework
