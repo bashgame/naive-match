@@ -1,5 +1,5 @@
-# python-template
-Template for new python projects
+# Naive Match
+Implementation of naive exact matching for nucleotide sequences
 
 ## Testing framework
 Includes template code for running tests with unittest and coverage

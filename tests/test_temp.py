@@ -2,7 +2,7 @@
 Template Test Cases, please update
 """
 from unittest import TestCase
-from source import *
+from sequences import *
 
 class TestTemplate(TestCase):
     """ Test Template, please update """
@@ -27,4 +27,4 @@ class TestTemplate(TestCase):
 
     def test_template(self):
         """ Template test case, please update """
-        self.assertEqual(True,False)
+        self.assertTrue(False)
