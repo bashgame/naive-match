@@ -120,3 +120,33 @@ def naive_2mm(pattern, sequence):
         if matched:
             matches.append(sidx)
     return matches
+
+
+def reads_from_fastq(filename):
+    """ Strips the initial line from a fastq file containing a single sequence
+        for a single organism. Reads the remaining lines and concatenates them
+        onto an str.
+
+    Args:
+        filename (str): The name of the file to read from in fastq format
+
+    Returns:
+        [str] [str] The sequences and the quality values encoded with phred33
+    """
+    seqs = []
+    quals = []
+    try:
+        file = open(filename)
+    except FileNotFoundError:
+        print(f"{filename} not found!")
+        return "Error, file not found"
+    while True:
+        file.readline()
+        seq = file.readline().rstrip()
+        file.readline()
+        qual = file.readline().rstrip()
+        if len(seq) == 0:
+            break
+        seqs.append(seq)
+        quals.append(qual)
+    return seqs, quals
