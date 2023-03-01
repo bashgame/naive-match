@@ -95,3 +95,14 @@ class TestSequences(TestCase):
         seq = utils.seq_from_fasta(filename)
         self.assertEqual(seq, errorMessage)
 
+    def test_naive_2mm(self):
+        """ It should allow 2 mismatches per occurrence """
+        test_seq = makeSeq(100)
+        test_pat = test_seq[:4]
+        expected = test_seq.find(test_pat)
+        test_pat2 = test_pat[0] + utils.rev_comp(test_pat[1]) + utils.rev_comp(test_pat[2]) + test_pat[3]
+        test_pat3 = test_pat[0] + utils.rev_comp(test_pat[1]) + utils.rev_comp(test_pat[2]) + utils.rev_comp(test_pat[3])
+        result2 = utils.naive_2mm(test_pat2, test_seq)
+        result3 = utils.naive_2mm(test_pat3, test_seq)
+        self.assertTrue(expected in result2)
+        self.assertTrue(expected not in result3)
