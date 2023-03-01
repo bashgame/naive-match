@@ -119,3 +119,10 @@ class TestSequences(TestCase):
         errorMessage = 'Error, file not found'
         seq = utils.reads_from_fastq(filename)
         self.assertEqual(seq, errorMessage)
+
+    def test_phred33_to_Q(self):
+        """ It should return the numerical equivalent of the phred33 character """
+        test_char = '#'
+        expected = 2
+        result = utils.phred33toQ(test_char)
+        self.assertEqual(expected, result)

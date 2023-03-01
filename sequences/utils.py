@@ -150,3 +150,7 @@ def reads_from_fastq(filename):
         seqs.append(seq)
         quals.append(qual)
     return seqs, quals
+
+
+def phred33toQ(phred):
+    return ord(phred) - 33
