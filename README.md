@@ -1,3 +1,5 @@
+[![CI](https://github.com/bashgame/naive-match/actions/workflows/ci.yml/badge.svg)](https://github.com/bashgame/naive-match/actions/workflows/ci.yml)
+
 # Naive Match
 Implementation of naive exact matching for nucleotide sequences
 
