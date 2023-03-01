@@ -94,3 +94,29 @@ def seq_from_fasta(filename):
         if not line.startswith('>'):
             sequence += line
     return sequence
+
+
+def naive_2mm(pattern, sequence):
+    """ This function performs a naive exact match alignment of pattern onto sequence
+        allowing for 2 mismatches per occurence
+
+    Args:
+        pattern (str): A pattern to attempt to align to sequence
+        sequence (str): The sequence to attempt alignment to.
+
+    Returns:
+        list [ ints ]: The list of indices where pattern can be aligned to sequence
+    """
+    matches = []
+    for sidx in range(len(sequence) - len(pattern) + 1):
+        mm = 0
+        matched = True
+        for pidx in range(len(pattern)):
+            if sequence[sidx + pidx] != pattern[pidx]:
+                mm += 1
+                if mm > 2:
+                    matched = False
+                    break
+        if matched:
+            matches.append(sidx)
+    return matches
